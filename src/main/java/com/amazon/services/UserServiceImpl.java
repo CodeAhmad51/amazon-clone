@@ -1,6 +1,7 @@
 package com.amazon.services;
 
 import com.amazon.dto.UserDto;
+import com.amazon.exception.InvalidUserException;
 import com.amazon.repository.IUserRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,18 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     public UserDto saveUser(UserDto userDto) {
-        if(StringUtils.isBlank(userDto.getPassword())){
-            throw new RuntimeException("User.password can not be empty");
-        }
         if(StringUtils.isBlank(userDto.getFirstName())){
-            throw new RuntimeException("User.First name can not be empty");
+            throw new InvalidUserException("User.First name can not be empty");
         }
+        if(StringUtils.isBlank(userDto.getPassword())){
+            throw new InvalidUserException("User.password can not be empty");
+        }
+
         if(StringUtils.isBlank(userDto.getEmail()) && StringUtils.isBlank(userDto.getMobile()) ){
-            throw new RuntimeException("User.Email or mobileNo both can not be empty");
+            throw new InvalidUserException("User.Email or User.mobile both can not be empty");
+        }
+        if( userDto.getMobile().length() != 10){
+            throw new InvalidUserException("User.mobile should be 10 digit");
         }
 
         userDto.setId(UUID.randomUUID());

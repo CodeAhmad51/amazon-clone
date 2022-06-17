@@ -11,6 +11,7 @@ public class WebApiResult<userDto> {
     List<Object> additionalInformation;
 
     public WebApiResult(){
+
         this.additionalInformation = new ArrayList<>();
     }
 

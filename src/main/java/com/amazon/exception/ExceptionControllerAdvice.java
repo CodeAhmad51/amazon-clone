@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExceptionControllerAdvice {
 
     @ExceptionHandler
-    public ResponseEntity<WebApiResult<UserDto>> invalidUserExceptionHandler(RuntimeException exception){
+    public ResponseEntity<WebApiResult<UserDto>> invalidUserExceptionHandler(InvalidUserException exception){
         var res = new WebApiResult<UserDto>();
         res.getAdditionalInformation().add(exception.getMessage());
         return new ResponseEntity<>(res , HttpStatus.BAD_REQUEST);
     }
+
 }
