@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class WebApiResult<userDto> {
-    public userDto result;
+public class WebApiResult<TResult> {
+    public TResult result;
     List<Object> additionalInformation;
 
     public WebApiResult(){

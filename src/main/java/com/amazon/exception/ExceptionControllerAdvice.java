@@ -17,4 +17,12 @@ public class ExceptionControllerAdvice {
         return new ResponseEntity<>(res , HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler
+    public ResponseEntity<WebApiResult<UserDto>> userNotExceptionHandler(UserNotFoundException exception){
+        var res = new WebApiResult<UserDto>();
+        res.getAdditionalInformation().add(exception.getMessage());
+        return new ResponseEntity<>(res , HttpStatus.NOT_FOUND);
+    }
+
+
 }

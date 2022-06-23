@@ -2,11 +2,14 @@ package com.amazon.services;
 
 import com.amazon.dto.UserDto;
 import com.amazon.exception.InvalidUserException;
+import com.amazon.exception.UserNotFoundException;
 import com.amazon.repository.IUserRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -56,10 +59,25 @@ public class UserServiceImpl implements IUserService{
         var userOptional = this.repository.findById(id);
 
         if(userOptional.isEmpty()){
-            return null;
-        }else{
+            throw new UserNotFoundException("User.Id is invalid , please provide a valid id");
+        }
+        else{
             var userEntity = userOptional.get();
             return userEntity.toDto();
         }
     }
+
+    @Override
+    public List<UserDto> findAllUser() {
+
+        var userList = this.repository.findAll();
+        List<UserDto> userDtoList = new ArrayList<>();
+        for(var user : userList){
+            var dto = user.toDto();
+            userDtoList.add(dto);
+        }
+        return userDtoList;
+    }
+
+
 }
