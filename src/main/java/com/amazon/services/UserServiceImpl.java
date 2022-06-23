@@ -31,7 +31,7 @@ public class UserServiceImpl implements IUserService{
             throw new InvalidUserException("User.Email or User.mobile both can not be empty");
         }
         if( userDto.getMobile().length() != 10){
-            throw new InvalidUserException("User.mobile should be 10 digit");
+            throw new InvalidUserException("User.mobile should contain 10 digit");
         }
 
         userDto.setId(UUID.randomUUID());
